@@ -1,0 +1,75 @@
+version: "3"
+
+services:
+  react-app:
+    container_name: ${DOCKER_CONTAINER_NAME}-web
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    environment:
+      - WATCHPACK_POLLING=true
+    ports:
+      - 3000:3000
+    stdin_open: true
+    volumes:
+      - "../frontend:/usr/app:delegated"
+      - /usr/app/node_modules/
+
+  php:
+    container_name: ${DOCKER_CONTAINER_NAME}-php
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    tty: true
+    # commands:
+    #   - composer install
+    #   - cp .env-example .env
+    volumes:
+      - ../api:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app
+
+  nginx:
+    container_name: ${DOCKER_CONTAINER_NAME}-nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    tty: true
+    ports:
+      - "8000:80"
+      - "443:443"
+    volumes:
+      - ../api:/var/www
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - app
+
+  mysql:
+    container_name: ${DOCKER_CONTAINER_NAME}-mysql
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    command: --default-authentication-plugin=mysql_native_password
+    tty: true
+    volumes:
+      - setup-data:/var/lib/mysql/
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - ./mysql/init.sql:/etc/mysql/init.sql
+    networks:
+      - app
+    ports:
+      - "25060:3306"
+    environment:
+      MYSQL_DATABASE: join_php
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+
+networks:
+  app:
+    driver: bridge
+
+volumes:
+  setup-data:
+    driver: local
