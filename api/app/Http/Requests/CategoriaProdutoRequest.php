@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class CategoriaProdutoRequest extends FormRequest
 {
@@ -19,10 +18,6 @@ class CategoriaProdutoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "id_categoria_planejamento" => [
-                "nullable",
-                Rule::unique("tb_produto")->ignore($this->route("categoria_produto") ?? 0, 'id_categoria_planejamento')
-            ],
             "nome_categoria" => ["required", "max:150"],
         ];
     }

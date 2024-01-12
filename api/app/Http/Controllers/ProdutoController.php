@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProdutoRequest;
+use App\Http\Resources\ProdutoResource;
 use App\Repositories\Interfaces\ProdutoRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +17,7 @@ class ProdutoController extends Controller
 
     public function index()
     {
-        return response()->json($this->produtoRepository->getAll());
+        return ProdutoResource::collection($this->produtoRepository->getAll());
     }
 
     /**
@@ -28,7 +29,7 @@ class ProdutoController extends Controller
             DB::beginTransaction();
             $produto = $this->produtoRepository->create($request->validated());
             DB::commit();
-            return response()->json($produto);
+            return new ProdutoResource($produto);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
@@ -37,8 +38,8 @@ class ProdutoController extends Controller
 
     public function show($id)
     {
-        $produto = $this->produtoRepository->getOneBy(['id' => $id]);
-        return response()->json($produto);
+        $produto = $this->produtoRepository->getOneBy(['id_produto' => $id]);
+        return new ProdutoResource($produto);
     }
 
     /**
@@ -50,7 +51,7 @@ class ProdutoController extends Controller
             DB::beginTransaction();
             $produto = $this->produtoRepository->update($id, $request->validated());
             DB::commit();
-            return response()->json($produto);
+            return new ProdutoResource($produto);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;

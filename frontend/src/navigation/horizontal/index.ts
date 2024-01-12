@@ -7,17 +7,23 @@ const navigation = (): HorizontalNavItemsType => [
     path: '/home',
     icon: 'bx:home-circle',
   },
+
+  // {
+  //   title: 'Second Page',
+  //   path: '/second-page',
+  //   icon: 'bx:envelope',
+  // },
+  // {
+  //   path: '/acl',
+  //   action: 'read',
+  //   subject: 'acl-page',
+  //   title: 'Access Control',
+  //   icon: 'bx:shield',
+  // },
   {
-    title: 'Second Page',
-    path: '/second-page',
-    icon: 'bx:envelope',
-  },
-  {
-    path: '/acl',
-    action: 'read',
-    subject: 'acl-page',
-    title: 'Access Control',
-    icon: 'bx:shield',
+    path: '/desafio',
+    title: 'Desafio PHP',
+    icon: 'bx:php'
   }
 ]
 

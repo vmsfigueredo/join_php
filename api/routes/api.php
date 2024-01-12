@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 // TODO Implementar Middlewares de Segurança
-Route::group(['prefix' => 'join'], function () {
+Route::group([], function () {
     Route::apiResource('produtos', ProdutoController::class);
     Route::apiResource('categoria-produtos', CategoriaProdutoController::class);
 });

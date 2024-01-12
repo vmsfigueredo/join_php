@@ -16,9 +16,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/app/Repositories
-/app/Providers/RepositoryServiceProvider.php
-app/Http/Controllers
-app/Http/Requests
-routes/api.php
-database/migrations/2024_*
+

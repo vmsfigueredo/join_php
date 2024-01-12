@@ -1,5 +1,5 @@
 // ** Type import
-import { VerticalNavItemsType } from 'src/@core/layouts/types'
+import {VerticalNavItemsType} from 'src/@core/layouts/types'
 
 const navigation = (): VerticalNavItemsType => {
   return [
@@ -8,17 +8,28 @@ const navigation = (): VerticalNavItemsType => {
       path: '/home',
       icon: 'bx:home-circle',
     },
+
+    // {
+    //   title: 'Second Page',
+    //   path: '/second-page',
+    //   icon: 'bx:envelope',
+    // },
+    // {
+    //   path: '/acl',
+    //   action: 'read',
+    //   subject: 'acl-page',
+    //   title: 'Access Control',
+    //   icon: 'bx:shield',
+    // }
     {
-      title: 'Second Page',
-      path: '/second-page',
-      icon: 'bx:envelope',
+      path: '/produtos',
+      title: 'Produtos',
+      icon: 'bx:package'
     },
     {
-      path: '/acl',
-      action: 'read',
-      subject: 'acl-page',
-      title: 'Access Control',
-      icon: 'bx:shield',
+      path: '/categorias',
+      title: 'Categorias',
+      icon: 'bx:category'
     }
   ]
 }

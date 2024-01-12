@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoriaProdutoRequest;
+use App\Http\Resources\CategoriaProdutoResource;
 use App\Repositories\Interfaces\CategoriaProdutoRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +17,7 @@ class CategoriaProdutoController extends Controller
 
     public function index()
     {
-        return response()->json($this->categoriaProdutoRepository->getAll());
+        return CategoriaProdutoResource::collection($this->categoriaProdutoRepository->getAll());
     }
 
     /**
@@ -26,9 +27,9 @@ class CategoriaProdutoController extends Controller
     {
         try {
             DB::beginTransaction();
-            $produto = $this->categoriaProdutoRepository->create($request->validated());
+            $categoria = $this->categoriaProdutoRepository->create($request->validated());
             DB::commit();
-            return response()->json($produto);
+            return new CategoriaProdutoResource($categoria);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;
@@ -37,8 +38,8 @@ class CategoriaProdutoController extends Controller
 
     public function show($id)
     {
-        $produto = $this->categoriaProdutoRepository->getOneBy(['id' => $id]);
-        return response()->json($produto);
+        $categoria = $this->categoriaProdutoRepository->getOneBy(['id_categoria_planejamento' => $id]);
+        return new CategoriaProdutoResource($categoria);
     }
 
     /**
@@ -48,9 +49,9 @@ class CategoriaProdutoController extends Controller
     {
         try {
             DB::beginTransaction();
-            $produto = $this->categoriaProdutoRepository->update($id, $request->validated());
+            $categoria = $this->categoriaProdutoRepository->update($id, $request->validated());
             DB::commit();
-            return response()->json($produto);
+            return new CategoriaProdutoResource($categoria);
         } catch (\Exception $exception) {
             DB::rollBack();
             throw $exception;

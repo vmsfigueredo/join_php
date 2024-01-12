@@ -20,10 +20,6 @@ class ProdutoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "id_produto" => [
-                "nullable",
-//                Rule::unique("tb_produto")->ignore($this->route("produto") ?? 0, 'id_produto')
-            ],
             "id_categoria_produto" => ["required", "integer", "exists:tb_categoria_produto,id_categoria_planejamento"],
             "nome_produto" => ["required", "max:150"],
             "valor_produto" => ["required", "numeric"],
